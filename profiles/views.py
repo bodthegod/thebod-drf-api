@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Profile
 from .serializers import ProfileSerializer
+from thebod_drf_api.permissions import IsOwnerOrReadOnly
 
 
 class ProfileList(APIView):
@@ -17,7 +18,8 @@ class ProfileList(APIView):
         and return serialized data
         """
         profiles = Profile.objects.all()
-        serializer = ProfileSerializer(profiles, many=True)
+        serializer = ProfileSerializer(
+            profiles, many=True, context={'request': request})
         return Response(serializer.data)
 
 
@@ -26,13 +28,16 @@ class ProfileDetail(APIView):
     Display details of specific profile based on primary key
     """
     serializer_class = ProfileSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+
     def get_object(self, pk):
         """
         Get request to retrieve single profile object
-        based upon id
+        based upon id, checks if is owner
         """
         try:
             profile = Profile.objects.get(pk=pk)
+            self.check_object_permissions(self.request, profile)
             return profile
         except Profile.DoesNotExist:
             raise Http404
@@ -42,7 +47,7 @@ class ProfileDetail(APIView):
         Gets and returns serialized data
         """
         profile = self.get_object(pk)
-        serializer = ProfileSerializer(profile)
+        serializer = ProfileSerializer(profile, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
@@ -50,7 +55,8 @@ class ProfileDetail(APIView):
         Put method to allow for editing of profile, name, content, image
         """
         profile = self.get_object(pk)
-        serializer = ProfileSerializer(profile, data=request.data)
+        serializer = ProfileSerializer(
+            profile, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

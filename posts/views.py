@@ -1,8 +1,10 @@
+from django.http import Http404
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Post
 from .serializers import PostSerializer
+from thebod_drf_api.permissions import IsOwnerOrReadOnly
 
 
 class PostList(APIView):
@@ -40,3 +42,32 @@ class PostList(APIView):
         return Response(
             serializer.errors, status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class PostDetail(APIView):
+    """
+    Post Detail class for specific posts
+    """
+    permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = PostSerializer
+
+    def get_object(self, pk):
+        """
+        Gets object by primary key (id)
+        """
+        try:
+            post = Post.objects.get(pk=pk)
+            self.check_object_permissions(self.request, post)
+            return post
+        except Post.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        """
+        Gets serialized data about post detail
+        """
+        post = self.get_object(pk)
+        serializer = PostSerializer(
+            post, context={'request': request}
+        )
+        return Response(serializer.data)

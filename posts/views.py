@@ -74,7 +74,7 @@ class PostDetail(APIView):
 
     def put(self, request, pk):
         """
-        Puts new inputted data into the related object
+        Puts new inputted data into the related object by id
         """
         post = self.get_object(pk)
         serializer = PostSerializer(
@@ -85,4 +85,14 @@ class PostDetail(APIView):
             return Response(serializer.data)
         return Response(
             serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )
+
+    def delete(self, request, pk):
+        """
+        Deletes selected post
+        """
+        post = self.get_object(pk)
+        post.delete()
+        return Response(
+            status=status.HTTP_204_NO_CONTENT
         )

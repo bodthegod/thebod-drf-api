@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class Tags(models.Model):
     """
     Model for tags associated to posts
@@ -26,7 +25,7 @@ class Post(models.Model):
     )
 
     class Meta:
-        ordering = ['-created_on']
+        ordering = ['-created_at']
 
     def __str__(self):
         return f'{self.id} {self.title}'

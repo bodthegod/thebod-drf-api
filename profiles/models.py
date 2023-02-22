@@ -17,6 +17,9 @@ class Profile(models.Model):
     )
 
     class Meta:
+        """
+        Orders profile by created at
+        """
         ordering = ['-created_at']
 
     def __str__(self):
@@ -27,6 +30,9 @@ class Profile(models.Model):
 
 
 def create_profile(sender, instance, created, **kwargs):
+    """
+    Create profile method
+    """
     if created:
         Profile.objects.create(owner=instance)
 

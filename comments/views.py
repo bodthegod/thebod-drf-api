@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions
+from thebod_drf_api.permissions import IsOwnerOrReadOnly
 from .models import Comment
-from .serializers import CommentSerializer
+from .serializers import CommentSerializer, CommentDetailSerializer
 
 
 class CommentList(generics.ListCreateAPIView):
@@ -14,3 +15,11 @@ class CommentList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
+class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Get individual comment details
+    """
+    serializer_class = CommentDetailSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+    queryset = Comment.objects.all()

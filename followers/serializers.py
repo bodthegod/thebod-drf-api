@@ -15,7 +15,7 @@ class FollowerSerializer(serializers.ModelSerializer):
         Fields associated with follower
         """
         model = Follower
-        fields = ['id', 'owner', 'post', 'created_at', 'followed_username']
+        fields = ['id', 'owner', 'created_at', 'followed_username']
 
     def create(self, validated_data):
         """

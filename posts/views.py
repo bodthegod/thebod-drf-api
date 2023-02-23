@@ -1,98 +1,26 @@
-from django.http import Http404
-from rest_framework import status, permissions
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import generics, permissions
+from thebod_drf_api.permissions import IsOwnerOrReadOnly
 from .models import Post
 from .serializers import PostSerializer
-from thebod_drf_api.permissions import IsOwnerOrReadOnly
 
 
-class PostList(APIView):
+class PostList(generics.ListCreateAPIView):
     """
     Postlist class to display all posts, enable permissions to 
     make users login to make changes
     """
     serializer_class = PostSerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = Post.objects.all()
 
-    def get(self, request):
-        """
-        Get request to get all posts
-        """
-        posts = Post.objects.all()
-        serializer = PostSerializer(
-            posts, many=True, context={'request': request}
-        )
-        return Response(serializer.data)
-
-    def post(self, request):
-        """
-        Post method to post data to database
-        """
-        serializer = PostSerializer(
-            data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.save(owner=request.user)
-            return Response(
-                serializer.data, status=status.HTTP_201_CREATED
-            )
-        return Response(
-            serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
-class PostDetail(APIView):
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Post Detail class for specific posts
+    Post Detail class for specific posts (have to be owner)
     """
-    permission_classes = [IsOwnerOrReadOnly]
     serializer_class = PostSerializer
-
-    def get_object(self, pk):
-        """
-        Gets object by primary key (id)
-        """
-        try:
-            post = Post.objects.get(pk=pk)
-            self.check_object_permissions(self.request, post)
-            return post
-        except Post.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk):
-        """
-        Gets serialized data about post detail
-        """
-        post = self.get_object(pk)
-        serializer = PostSerializer(
-            post, context={'request': request}
-        )
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        """
-        Puts new inputted data into the related object by id
-        """
-        post = self.get_object(pk)
-        serializer = PostSerializer(
-            post, data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(
-            serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
-
-    def delete(self, request, pk):
-        """
-        Deletes selected post
-        """
-        post = self.get_object(pk)
-        post.delete()
-        return Response(
-            status=status.HTTP_204_NO_CONTENT
-        )
+    permission_classes = [IsOwnerOrReadOnly]
+    queryset = Post.objects.all()

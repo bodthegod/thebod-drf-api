@@ -8,6 +8,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     Class for profile serializer
     """
     owner = serializers.ReadOnlyField(source='owner.username')
+    following_id = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):

@@ -11,20 +11,20 @@ class ProfileList(generics.ListAPIView):
     queryset
     """
     queryset = Profile.objects.annotate(
-        followers_count=Count('owner__followed', distinct=True),
-        following_count=Count('owner__following', distinct=True),
-        posts_count=Count('owner__post', distinct=True)
+        followers_total=Count('owner__followed', distinct=True),
+        following_total=Count('owner__following', distinct=True),
+        posts_totalt=Count('owner__post', distinct=True)
     ).order_by('-created_at')
     serializer_class = ProfileSerializer
     filter_backends = [
         filters.OrderingFilter
     ]
     ordering_fields = [
-        'posts_count',
+        'posts_total',
         'owner__following__created_at',
         'owner__followed__created_at',
-        'followers_count',
-        'following_count',
+        'followers_total',
+        'following_total',
     ]
 
 
@@ -34,8 +34,8 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Profile.objects.annotate(
-        followers_count=Count('owner__followed', distinct=True),
-        following_count=Count('owner__following', distinct=True),
-        posts_count=Count('owner__post', distinct=True)
+        followers_total=Count('owner__followed', distinct=True),
+        following_total=Count('owner__following', distinct=True),
+        posts_total=Count('owner__post', distinct=True)
     ).order_by('-created_at')
     serializer_class = ProfileSerializer

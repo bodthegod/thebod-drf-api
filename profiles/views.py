@@ -22,10 +22,11 @@ class ProfileList(generics.ListAPIView):
         DjangoFilterBackend,
     ]
     filterset_fields = [
-        """
-        displays profile results that are followed
-        """
+
+        # displays profile results that are following
         'owner__following__followed__profile',
+        # displays profile results that are followed
+        'owner__followed__owner__profile',
     ]
     ordering_fields = [
         'posts_total',

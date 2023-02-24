@@ -1,4 +1,5 @@
 from rest_framework import generics, permissions
+from django.db.models import Count
 from thebod_drf_api.permissions import IsOwnerOrReadOnly
 from .models import Post
 from .serializers import PostSerializer
@@ -11,7 +12,10 @@ class PostList(generics.ListCreateAPIView):
     """
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Post.objects.all()
+    queryset = Post.objects.annotate(
+        likes_total=Count('likes', distinct=True),
+        comments_total=Count('comment', distinct=True)
+    ).order_by('-created_at')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

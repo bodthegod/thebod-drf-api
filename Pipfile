@@ -8,6 +8,7 @@ django = "*"
 django-cloudinary-storage = "*"
 pillow = "*"
 djangorestframework = "*"
+django-filter = "*"
 
 [dev-packages]
 

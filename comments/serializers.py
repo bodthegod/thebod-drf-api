@@ -26,7 +26,6 @@ class CommentSerializer(serializers.ModelSerializer):
         Gets created at time in naturaltime format
         """
         return naturaltime(obj.created_at)
-    
 
     def get_updated_at(self, obj):
         """

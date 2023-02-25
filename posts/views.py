@@ -8,7 +8,7 @@ from .serializers import PostSerializer
 
 class PostList(generics.ListCreateAPIView):
     """
-    Postlist class to display all posts, enable permissions to 
+    Postlist class to display all posts, enable permissions to
     make users login to make changes
     """
     serializer_class = PostSerializer

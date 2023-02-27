@@ -24,11 +24,13 @@ class PostList(generics.ListCreateAPIView):
     ]
     filterset_fields = [
         'owner__profile',  # site user's posts
+        'tags',  # filter by tags
         'likes__owner__profile',  # all site users liked posts
         'owner__followed__owner__profile',  # site users posts feed
     ]
     search_fields = [
         'title',
+        'tags',
         'owner__username'
     ]
     ordering_fields = [

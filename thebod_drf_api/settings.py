@@ -104,14 +104,11 @@ MIDDLEWARE = [
 ]
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
-    ]
-else:
-    CORS_ALLOWED_ORIGIN_REGEXES = [
+        "https://thebod-blog.herokuapp.com",
+        "https://thebod-app.herokuapp.com",
         "http://192.168.0.64:3000",
         "http://localhost:3000",
     ]
-
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'thebod_drf_api.urls'

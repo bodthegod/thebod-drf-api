@@ -78,3 +78,13 @@ class FollowerDetailViewTests(APITestCase):
         self.client.login(username='joe', password='joes password')
         response = self.client.delete('/followers/1/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_user_can_view_following_using_invalid_id(self):
+        """
+        Test to check if a user can view a following
+        that has an invalid id using followers/<int:pk>/
+        (has not been created yet)
+        """
+        self.client.login(username='joe', password='joes password')
+        response = self.client.get('/followers/100/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

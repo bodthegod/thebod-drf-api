@@ -14,7 +14,7 @@ class ProfileList(generics.ListAPIView):
     queryset = Profile.objects.annotate(
         followers_total=Count('owner__followed', distinct=True),
         following_total=Count('owner__following', distinct=True),
-        posts_totalt=Count('owner__post', distinct=True)
+        posts_total=Count('owner__post', distinct=True)
     ).order_by('-created_at')
     serializer_class = ProfileSerializer
     filter_backends = [

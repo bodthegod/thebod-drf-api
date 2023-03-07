@@ -75,7 +75,7 @@ class PostDetailViewTests(APITestCase):
         Test to get a post that has been created by a user (doesn't have to
         be logged in)
         """
-        response = self.client.get('/posts/2')
+        response = self.client.get('/posts/2/')
         self.assertEqual(response.data['title'], 'bobs title')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -84,5 +84,41 @@ class PostDetailViewTests(APITestCase):
         Test to see if a user can retrieve an invalid post (post id that hasn't
         been created yet)
         """
-        response = self.client.get('/posts/100')
+        response = self.client.get('/posts/100/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_logged_in_user_can_delete_own_post(self):
+        """
+        Test to check if a logged in user can delete their own post
+        """
+        self.client.login(username='joe', password='joespassword')
+        response = self.client.delete('/posts/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_user_remove_different_user_post(self):
+        """
+        Test if a user can delete a post they have not created
+        """
+        self.client.login(username='joe', password='joespassword')
+        response = self.client.delete('/posts/2/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_edit_own_post(self):
+        """
+        Test if a user can edit a post they created
+        """
+        self.client.login(username='joe', password='joespassword')
+        response = self.client.put(
+            '/posts/1/', {'title': 'joes edited title!', 'tags': 'Running'})
+        new_post = Post.objects.filter(pk=1).first()
+        self.assertEqual(new_post.title, 'joes edited title!')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_cant_edit_other_post(self):
+        """
+        Test if a user can edit a post they did not create or own
+        """
+        self.client.login(username='joe', password='joespassword')
+        response = self.client.put(
+            '/posts/2/', {'title': 'joes edited title!'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

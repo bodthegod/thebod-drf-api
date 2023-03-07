@@ -29,10 +29,10 @@ class CommentDetailViewTests(APITestCase):
         joe = User.objects.create_user(username='joe', password='joespassword')
         bob = User.objects.create_user(username='bob', password='bobspass')
         Post.objects.create(
-            owner=joe, title='joes title'
+            owner=joe, tags='Bodybuilding', title='joes title'
         )
         Post.objects.create(
-            owner=bob, title='bobs title'
+            owner=bob, tags='Bodybuilding', title='bobs title'
         )
         Comment.objects.create(owner=joe, post_id=1,
                                comment_info='joes first comment')
@@ -54,7 +54,23 @@ class CommentDetailViewTests(APITestCase):
         """
         Test to get a previously created comment by pk
         """
-        self.client.login(username='joe', password='password')
+        self.client.login(username='joe', password='joespassword')
         response = self.client.get('/comments/1/')
         self.assertEqual(response.data['comment_info'], 'joes first comment')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_invalid_comment(self):
+        """
+        Test to see if a comment with non existing id can be viewed
+        """
+        self.client.login(username='joe', password='joespassword')
+        response = self.client.get('/comments/100/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_logged_in_user_can_delete_own_comment(self):
+        """
+        Test to check if a logged in user can delete their own comment
+        """
+        self.client.login(username='joe', password='joespassword')
+        response = self.client.delete('/comments/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

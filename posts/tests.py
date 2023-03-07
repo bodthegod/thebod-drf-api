@@ -6,7 +6,7 @@ from .models import Post
 
 class PostListViewTests(APITestCase):
     """
-    Tests for postlistview
+    Tests for postlistview (all posts listings)
     """
 
     def setUp(self):
@@ -28,7 +28,8 @@ class PostListViewTests(APITestCase):
         Tests if a logged in user can create a post
         """
         self.client.login(username='joe', password='password')
-        response = self.client.post('/posts/', {'title': 'new title'})
+        response = self.client.post('/posts/', {'title': 'new title',
+                                                'tags': 'Bodybuilding'})
         count = Post.objects.count()
         self.assertEqual(count, 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -37,5 +38,51 @@ class PostListViewTests(APITestCase):
         """
         Tests for if a non authenticated user can create a post (should not)
         """
-        response = self.client.post('/posts/', {'title': 'a title'})
+        response = self.client.post('/posts/', {'title': 'a title',
+                                                'tags': 'Running'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_cant_post_without_title(self):
+        """
+        Test that a post should not be able to be created
+        without a title
+        """
+        self.client.login(username='joe', password='password')
+        response = self.client.post('/posts/', {'tags': 'Running'})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class PostDetailViewTests(APITestCase):
+    """
+    Tests for details of posts (individual posts)
+    """
+
+    def setUp(self):
+        """
+        Creates two user objects containing one post per user
+        """
+        joe = User.objects.create_user(username='joe', password='joespassword')
+        bob = User.objects.create_user(username='bob', password='bobspass')
+        Post.objects.create(
+            owner=joe, tags='Bodybuilding', title='joes title'
+        )
+        Post.objects.create(
+            owner=bob, tags='Bodybuilding', title='bobs title'
+        )
+
+    def test_get_created_post(self):
+        """
+        Test to get a post that has been created by a user (doesn't have to
+        be logged in)
+        """
+        response = self.client.get('/posts/2')
+        self.assertEqual(response.data['title'], 'bobs title')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_cant_get_invalid_post(self):
+        """
+        Test to see if a user can retrieve an invalid post (post id that hasn't
+        been created yet)
+        """
+        response = self.client.get('/posts/100')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

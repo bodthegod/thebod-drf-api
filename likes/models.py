@@ -1,3 +1,6 @@
+"""
+Models imported from django ↓
+"""
 from django.db import models
 from django.contrib.auth.models import User
 from posts.models import Post
@@ -19,7 +22,7 @@ class Like(models.Model):
 
     class Meta:
         """
-        ordered by time created at descending, 
+        ordered by time created at descending,
         owner and post is unique and keeps
         likes validated
         """

@@ -1,3 +1,6 @@
+"""
+URL Path imported from django.urls ↓
+"""
 from django.urls import path
 from profiles import views
 

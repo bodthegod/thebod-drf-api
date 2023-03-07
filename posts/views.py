@@ -1,3 +1,7 @@
+"""
+Generic views, permission policies and backend
+filters imported from rest_framework↓
+"""
 from rest_framework import generics, permissions, filters
 from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend

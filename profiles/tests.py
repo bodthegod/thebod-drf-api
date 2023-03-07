@@ -1,3 +1,6 @@
+"""
+Users within django auth model ↓
+"""
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -8,6 +11,7 @@ class ProfileDetailViewTests(APITestCase):
     """
     Tests for specific user methods tied to a profile
     """
+
     def setUp(self):
         """
         Creates two user objects for the setup
@@ -20,7 +24,8 @@ class ProfileDetailViewTests(APITestCase):
         Test if possible for a user to edit their profile
         """
         self.client.login(username='joe', password='joespassword')
-        response = self.client.put('/profiles/1/', {'content': 'i can edit! :)'})
+        response = self.client.put(
+            '/profiles/1/', {'content': 'i can edit! :)'})
         profile = Profile.objects.filter(pk=1).first()
         self.assertEqual(profile.content, 'i can edit! :)')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -30,7 +35,8 @@ class ProfileDetailViewTests(APITestCase):
         Test if a user can't edit other profiles that they do not own
         """
         self.client.login(username='joe', password='joespassword')
-        response = self.client.put('/profiles/2/', {'content': 'i cant edit :('})
+        response = self.client.put(
+            '/profiles/2/', {'content': 'i cant edit :('})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_user_can_view_profiles(self):
@@ -53,6 +59,6 @@ class ProfileDetailViewTests(APITestCase):
         """
         Test if an unauthenticated user can't edit a profile
         """
-        response = self.client.put('/profiles/2/', {'content': 'i still cant edit :('})
+        response = self.client.put(
+            '/profiles/2/', {'content': 'i still cant edit :('})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-

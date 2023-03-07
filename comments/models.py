@@ -1,3 +1,6 @@
+"""
+Models imported from django.db ↓
+"""
 from django.db import models
 from django.contrib.auth.models import User
 from posts.models import Post
@@ -23,4 +26,4 @@ class Comment(models.Model):
         """
         Returns comment information
         """
-        return self.comment_info
+        return f'{self.owner}'

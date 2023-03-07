@@ -1,3 +1,7 @@
+"""
+User model imported for users
+within the django auth system
+"""
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -6,6 +10,10 @@ from .models import Comment
 
 
 class CommentListViewTests(APITestCase):
+    """
+    Tests for comment list
+    """
+
     def setUp(self):
         """
         Automatically runs before every test method
@@ -22,6 +30,10 @@ class CommentListViewTests(APITestCase):
 
 
 class CommentDetailViewTests(APITestCase):
+    """
+    Tests for specific user methods tied to a comment
+    """
+
     def setUp(self):
         """
         Creates two user objects containing one commment and one post each
@@ -45,7 +57,8 @@ class CommentDetailViewTests(APITestCase):
         """
         self.client.login(username='joe', password='joespassword')
         response = self.client.post('/comments/', {'post': 1,
-                                                   'comment_info': 'second comment'})
+                                                   'comment_info':
+                                                   'second comment'})
         comment_total = Comment.objects.count()
         self.assertEqual(comment_total, 3)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -88,7 +101,8 @@ class CommentDetailViewTests(APITestCase):
         Test if a user can edit a comment they created
         """
         self.client.login(username='joe', password='joespassword')
-        response = self.client.put('/comments/1/', {'comment_info': 'joes edited comment!'})
+        response = self.client.put(
+            '/comments/1/', {'comment_info': 'joes edited comment!'})
         new_comment = Comment.objects.filter(pk=1).first()
         self.assertEqual(new_comment.comment_info, 'joes edited comment!')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -98,5 +112,6 @@ class CommentDetailViewTests(APITestCase):
         Test if a user can edit a comment they did not create or own
         """
         self.client.login(username='joe', password='joespassword')
-        response = self.client.put('/comments/2/', {'comment_info': 'joes edited comment!'})
+        response = self.client.put(
+            '/comments/2/', {'comment_info': 'joes edited comment!'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

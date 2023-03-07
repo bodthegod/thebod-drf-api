@@ -1,3 +1,6 @@
+"""
+Generic views and permissions from rest framework ↓
+"""
 from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from thebod_drf_api.permissions import IsOwnerOrReadOnly

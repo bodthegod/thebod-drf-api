@@ -1,3 +1,6 @@
+"""
+URL Paths imported from django ↓
+"""
 from django.urls import path
 from likes import views
 

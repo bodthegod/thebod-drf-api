@@ -74,3 +74,29 @@ class CommentDetailViewTests(APITestCase):
         self.client.login(username='joe', password='joespassword')
         response = self.client.delete('/comments/1/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_user_remove_different_user_comment(self):
+        """
+        Test if a user can delete a comment they have not created
+        """
+        self.client.login(username='joe', password='joespassword')
+        response = self.client.delete('/comments/2/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_edit_own_comment(self):
+        """
+        Test if a user can edit a comment they created
+        """
+        self.client.login(username='joe', password='joespassword')
+        response = self.client.put('/comments/1/', {'comment_info': 'joes edited comment!'})
+        new_comment = Comment.objects.filter(pk=1).first()
+        self.assertEqual(new_comment.comment_info, 'joes edited comment!')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_cant_edit_other_comment(self):
+        """
+        Test if a user can edit a comment they did not create or own
+        """
+        self.client.login(username='joe', password='joespassword')
+        response = self.client.put('/comments/2/', {'comment_info': 'joes edited comment!'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

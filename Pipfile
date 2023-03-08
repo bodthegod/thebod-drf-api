@@ -17,6 +17,7 @@ psycopg2 = "*"
 gunicorn = "*"
 django-cors-headers = "*"
 coverage = "*"
+whitenoise = "*"
 
 [dev-packages]
 

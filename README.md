@@ -144,6 +144,78 @@ These are tests I have run manually by testing all functionality through the adm
 | 5 | Follower Model | Create and delete functionality for followers | A Follow can be added to a user or removed (has to be logged in) | This works correctly |
 | 6 | Comments Model | CRUD functionality of a comment | A Comment can be created, read, updated or deleted associated with a post (has to be own comment) | This works correctly |
 
+<details>
+<summary><strong>#1 User and Profile Creation Test Screenshots</strong></summary>
+1. Creating a profile with username and password
+<img src="docs/testing/created-profile-first.PNG">
+2. Showing the new user exists
+<img src="docs/testing/created-profile-second.PNG">
+3. Showing the new profile exists
+<img src="docs/testing/created-profile-third.PNG">
+</details>
+
+<details>
+<summary><strong>#2 Profile Edit and Deletion Test Screenshots</strong></summary>
+1. Adding content to edit profile
+<img src="docs/testing/edit-profile-first.PNG">
+2. Profile edited successfully
+<img src="docs/testing/edit-profile-second.PNG">
+3. Delete profile confirmation
+<img src="docs/testing/delete-profile-third.PNG">
+4. Profile deleted successfully
+<img src="docs/testing/delete-profile-fourth.PNG">
+</details>
+
+<details>
+<summary><strong>#3 Posts Create, Edit and Deletion Test Screenshots</strong></summary>
+1. Creating post
+<img src="docs/testing/create-post-first.PNG">
+2. Edited post with new content and title (same post id)
+<img src="docs/testing/edit-post-second.PNG">
+3. Delete post confirmation
+<img src="docs/testing/delete-post-third.PNG">
+4. Deleted post (204 No Content on old post id)
+<img src="docs/testing/deleted-post-fourth.PNG">
+</details>
+
+<details>
+<summary><strong>#4 Like and Unlike Test Screenshots</strong></summary>
+1. List of all posts to like
+<img src="docs/testing/like-post-first.PNG">
+2. Liking post (201 Created)
+<img src="docs/testing/liked-post-second.PNG">
+3. Unlike post confirmation
+<img src="docs/testing/like-delete-third.PNG">
+4. Deleted like (204 No Content on old like id)
+<img src="docs/testing/deleted-like-fourth.PNG">
+</details>
+
+<details>
+<summary><strong>#5 Follow and Unfollow Test Screenshots</strong></summary>
+1. List of all followers
+<img src="docs/testing/follower-list-first.PNG">
+2. Followed profile
+<img src="docs/testing/followed-profile-second.PNG">
+3. Unfollow confirmation
+<img src="docs/testing//follow-delete-third.PNG">
+4. Deleted follow (204 No Content on old followers id)
+<img src="docs/testing/follower-remove-fourth.PNG">
+</details>
+
+<details>
+<summary><strong>#6 Comments Create, Edit and Deletion Test Screenshots</strong></summary>
+1. List of all comments
+<img src="docs/testing/comments-list-first.PNG">
+2. Created comment on a post
+<img src="docs/testing/created-comment-second.PNG">
+3. Edited comment
+<img src="docs/testing/edited-comment-third.PNG">
+4. Comment deletion confirmation
+<img src="docs/testing/comment-delete-confirm-fourth.PNG">
+5. Deleted comment (204 No Content on old comments id)
+<img src="docs/testing//comment-delete-final-fifth.PNG>
+</details>
+
 ## Known Bugs
 
 There was one major bug that I discovered when creating this API, as shown below.

@@ -213,7 +213,7 @@ These are tests I have run manually by testing all functionality through the adm
 4. Comment deletion confirmation
 <img src="docs/testing/comment-delete-confirm-fourth.PNG">
 5. Deleted comment (204 No Content on old comments id)
-<img src="docs/testing//comment-delete-final-fifth.PNG>
+<img src="docs/testing//comment-delete-final-fifth.PNG">
 </details>
 
 ## Known Bugs

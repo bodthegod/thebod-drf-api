@@ -1,5 +1,5 @@
 """
-URL Path imported from django.urls ↓
+URL Paths imported from django ↓
 """
 from django.urls import path
 from profiles import views

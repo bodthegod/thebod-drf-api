@@ -1,3 +1,7 @@
+"""
+Generic views, permission policies
+imported from rest_framework ↓
+"""
 from rest_framework import generics, permissions
 from thebod_drf_api.permissions import IsOwnerOrReadOnly
 from .models import Like

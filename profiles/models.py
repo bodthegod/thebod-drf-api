@@ -1,3 +1,6 @@
+"""
+Models imported from django.db ↓
+"""
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
@@ -32,6 +35,11 @@ class Profile(models.Model):
 
 
 def create_profile(sender, instance, created, **kwargs):
+    """
+    Create profile function:
+    Owner is assigned
+    upon creation of profile
+    """
     if created:
         Profile.objects.create(owner=instance)
 

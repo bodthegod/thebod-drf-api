@@ -131,18 +131,24 @@ For automated testing I have imported APITestCase from rest_framework.test, whic
 
 <img src="docs/testing/api-coverage-report.PNG"></details>
 
-### Manual Testing
+### Manual Testing of User Stories
 
-These are tests I have run manually by testing all functionality through the admin side of my API.
+1. As an admin, I want create functionality of all profiles, posts, likes and comments.
+2. As an admin, I want update functionality of all profiles, posts, likes and comments so that I can edit any content I choose to.
+3. As an admin, I want delete functionality of all profiles, posts, likes and comments so that I can delete any content that may be deemed as harmful.
 
-| # | Model Test | Functionality | Expected Action | Actual Action |
+| # | Test | Functionality | Expected Action | Actual Action |
 | --- | --- | --- | --- | --- |
-| 1 | User Model | CRUD functionality of a User | A User can be created, read, updated or deleted | This works correctly |
-| 2 | Profile Model | CRUD functionality of a Profile | A Profile can be created, read, updated or deleted for a User (has to be own profile) | This works correctly |
-| 3 | Posts Model | CRUD functionality of a Post | A Post can be created, read, updated or deleted for a User (has to be for own post) | This works correctly |
-| 4 | Likes Model | Create and delete functionality for likes | A Like can be added or removed from a post if a user is logged in (cannot like own post) | This works correctly |
-| 5 | Follower Model | Create and delete functionality for followers | A Follow can be added to a user or removed (has to be logged in) | This works correctly |
-| 6 | Comments Model | CRUD functionality of a comment | A Comment can be created, read, updated or deleted associated with a post (has to be own comment) | This works correctly |
+| 1 | User | CRUD functionality of a User | A User can be created, read, updated or deleted | This works correctly |
+| 2 | Profile | CRUD functionality of a Profile | A Profile can be created, read, updated or deleted for a User (has to be own profile) | This works correctly |
+| 3 | Posts | CRUD functionality of a Post | A Post can be created, read, updated or deleted for a User (has to be for own post) | This works correctly |
+| 4 | Likes | Create and delete functionality for likes | A Like can be added or removed from a post if a user is logged in (cannot like own post) | This works correctly |
+| 5 | Follower | Create and delete functionality for followers | A Follow can be added to a user or removed (has to be logged in) | This works correctly |
+| 6 | Comments | CRUD functionality of a comment | A Comment can be created, read, updated or deleted associated with a post (has to be own comment) | This works correctly |
+
+<strong>The table above addresses all of my user stories, including the create, update and delete functionality of all aspects of my website. </strong>
+
+As well as this: likes, comments, posts and following are only able to be created by authenticated users that are signed into their account. Profiles that have created content are the only profiles authenticated to edit and remove the content they have created (other than admins).
 
 <details>
 <summary><strong>#1 User and Profile Creation Test Screenshots</strong></summary>

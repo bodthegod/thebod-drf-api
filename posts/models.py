@@ -28,7 +28,7 @@ class Post(models.Model):
                             default='Fitness')
     content = models.TextField(blank=True)
     image = models.ImageField(
-        upload_to='images/', default='../default_post_f3qkbi', blank=True
+        upload_to='images/', default='../default_post_new_rkuynm', blank=True
     )
 
     class Meta:

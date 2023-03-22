@@ -17,15 +17,14 @@ class Post(models.Model):
         ('Wellbeing', 'Wellbeing'),
         ('Strength Training', 'Strength Training'),
         ('Hypertrophy', 'Hypertrophy'),
-        ('CrossFit', 'CrossFit'),
+        ('CrossFit', 'CrossFit')
     ]
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
-    tags = models.CharField(max_length=30, choices=tags_array,
-                            default='Fitness')
+    tags = models.CharField(max_length=30, choices=tags_array)
     content = models.TextField(blank=True)
     image = models.ImageField(
         upload_to='images/', default='../default_post_new_rkuynm', blank=True

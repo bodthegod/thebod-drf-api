@@ -60,7 +60,23 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.environ.get('ALLOWED_HOST')]
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),
+    '127.0.0.1',
+    '192.168.0.64',
+    'localhost',]
+
+
+if 'CLIENT_ORIGIN' in os.environ:
+    CORS_ALLOWED_ORIGINS = [
+        "https://thebod-blog.herokuapp.com",
+        "http://thebod-blog.herokuapp.com",
+        'https://drf-api-deploy.herokuapp.com',
+        'http://drf-api-deploy.herokuapp.com',
+        "http://192.168.0.64:3000",
+        "http://localhost:3000",
+    ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition

@@ -104,10 +104,10 @@ MIDDLEWARE = [
 ]
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
-        "https://thebod-blog.herokuapp.com/",
-        "https://thebod-app.herokuapp.com/",
-        "http://192.168.0.64:3000/",
-        "http://localhost:3000/",
+        "https://thebod-blog.herokuapp.com",
+        "https://thebod-app.herokuapp.com",
+        "http://192.168.0.64:3000",
+        "http://localhost:3000",
     ]
 CORS_ALLOW_CREDENTIALS = True
 

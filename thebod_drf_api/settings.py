@@ -63,6 +63,7 @@ DEBUG = 'DEV' in os.environ
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),
     '127.0.0.1',
     '192.168.0.64',
+    '192.168.0.12',
     'localhost',]
 
 
@@ -73,6 +74,7 @@ if 'CLIENT_ORIGIN' in os.environ:
         'https://drf-api-deploy.herokuapp.com',
         'http://drf-api-deploy.herokuapp.com',
         "http://192.168.0.64:3000",
+        "http://192.168.0.12:3000",
         "http://localhost:3000",
     ]
 
@@ -118,11 +120,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
-    ]
-CORS_ALLOW_CREDENTIALS = True
+
 
 ROOT_URLCONF = 'thebod_drf_api.urls'
 
@@ -186,6 +184,8 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 

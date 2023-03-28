@@ -61,10 +61,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),
-    '127.0.0.1',
-    '192.168.0.64',
-    '192.168.0.12',
-    'localhost',]
+                 '127.0.0.1',
+                 '192.168.0.64',
+                 '192.168.0.12',
+                 'localhost',
+                 ]
 
 
 if 'CLIENT_ORIGIN' in os.environ:
